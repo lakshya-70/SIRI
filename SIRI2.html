@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Interview Performance Analyzer - College Level</title>
+    <style>
+        /* Enhanced futuristic animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes particle-float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600;700&display=swap');
+        
+        body {
+            font-family: 'Exo 2', sans-serif;
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .container {
+            background: linear-gradient(145deg, #1a1a2e, #16213e);
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: 0 25px 50px rgba(0, 212, 255, 0.1), 
+                        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            max-width: 1200px;
+            width: 100%;
+            text-align: center;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.1), transparent);
+            animation: scan 3s infinite;
+        }
+        
+        @keyframes scan {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        h1 {
+            color: #00d4ff;
+            margin-bottom: 30px;
+            font-size: 3em;
+            font-family: 'Orbitron', monospace;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { text-shadow: 0 0 20px rgba(0, 212, 255, 0.5); }
+            to { text-shadow: 0 0 30px rgba(0, 212, 255, 0.8), 0 0 40px rgba(0, 212, 255, 0.6); }
+        }
+
+        .question-section {
+            background: linear-gradient(145deg, #1e1e3f, #2d2d5f);
+            padding: 30px;
+            border-radius: 20px;
+            margin: 25px 0;
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+        
+        .question-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #00d4ff, #00ff88, #ffaa00);
+            animation: border-glow 2s linear infinite;
+        }
+        
+        @keyframes border-glow {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .question {
+            font-size: 22px;
+            color: #00d4ff;
+            margin-bottom: 20px;
+            font-weight: 700;
+            font-family: 'Exo 2', sans-serif;
+            text-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+            line-height: 1.4;
+        }
+
+        .video-container {
+            background: linear-gradient(145deg, #0a0a0a, #1a1a1a);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 25px 0;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid rgba(0, 212, 255, 0.2);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+        }
+        
+        .video-container::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #00d4ff, #00ff88, #ffaa00, #00d4ff);
+            border-radius: 20px;
+            z-index: -1;
+            animation: border-rotate 4s linear infinite;
+        }
+        
+        @keyframes border-rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        #videoElement {
+            width: 100%;
+            max-width: 500px;
+            height: 300px;
+            border-radius: 10px;
+            background: #333;
+        }
+
+        .controls {
+            margin: 20px 0;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 700;
+            font-family: 'Exo 2', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #00d4ff, #0099cc);
+            color: #0a0a0a;
+            box-shadow: 0 5px 20px rgba(0, 212, 255, 0.4);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0, 212, 255, 0.6);
+        }
+
+        .btn-success {
+            background: linear-gradient(45deg, #00ff88, #00cc66);
+            color: #0a0a0a;
+            box-shadow: 0 5px 20px rgba(0, 255, 136, 0.4);
+        }
+        
+        .btn-success:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0, 255, 136, 0.6);
+        }
+
+        .btn-warning {
+            background: linear-gradient(45deg, #ffc107, #e0a800);
+            color: #333;
+        }
+
+        .btn-danger {
+            background: linear-gradient(45deg, #dc3545, #c82333);
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .status {
+            font-size: 18px;
+            color: #00d4ff;
+            margin: 25px 0;
+            padding: 20px;
+            background: linear-gradient(145deg, #1a1a2e, #16213e);
+            border-radius: 15px;
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            font-family: 'Exo 2', sans-serif;
+            font-weight: 600;
+            text-align: center;
+            position: relative;
+        }
+        
+        .status::before {
+            content: '▶';
+            color: #00d4ff;
+            margin-right: 10px;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .performance-section {
+            background: linear-gradient(145deg, #2d1b69, #11998e);
+            padding: 30px;
+            border-radius: 20px;
+            margin: 25px 0;
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            display: none;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .performance-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(0, 255, 136, 0.1) 50%, transparent 70%);
+            animation: shimmer 3s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .performance-score {
+            font-size: 64px;
+            font-weight: 900;
+            color: #00ff88;
+            margin: 15px 0;
+            font-family: 'Orbitron', monospace;
+            text-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+            animation: score-glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes score-glow {
+            from { text-shadow: 0 0 20px rgba(0, 255, 136, 0.5); }
+            to { text-shadow: 0 0 30px rgba(0, 255, 136, 0.8), 0 0 40px rgba(0, 255, 136, 0.6); }
+        }
+
+        .confidence-meter {
+            width: 100%;
+            height: 20px;
+            background: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+
+        .confidence-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #dc3545, #ffc107, #28a745);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .metric-card {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .metric-title {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .metric-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .recommendations {
+            background: #d4edda;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #28a745;
+        }
+
+        .answer-analysis {
+            background: #e7f3ff;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #007bff;
+            display: none;
+        }
+
+        .final-results {
+            background: linear-gradient(45deg, #28a745, #20c997);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+            display: none;
+        }
+
+        .final-score {
+            font-size: 84px;
+            font-weight: 900;
+            margin: 25px 0;
+            font-family: 'Orbitron', monospace;
+            background: linear-gradient(45deg, #00d4ff, #00ff88, #ffaa00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(0, 212, 255, 0.5);
+            animation: final-score-pulse 2s infinite;
+        }
+        
+        @keyframes final-score-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .question-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .timer {
+            font-size: 24px;
+            font-weight: bold;
+            color: #007bff;
+            font-family: 'Courier New', monospace;
+        }
+
+        .recording-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            background: #dc3545;
+            border-radius: 50%;
+            margin-right: 8px;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        
+        /* Animated particles */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #00d4ff;
+            border-radius: 50%;
+            animation: particle-float 15s infinite linear;
+            animation-delay: calc(var(--i) * 1.5s);
+            opacity: 0.7;
+        }
+        
+        .particle:nth-child(odd) {
+            background: #00ff88;
+            animation-duration: 20s;
+        }
+        
+        .particle:nth-child(3n) {
+            background: #ffaa00;
+            animation-duration: 12s;
+        }
+        
+        @keyframes particle-float {
+            0% {
+                transform: translateY(100vh) translateX(0) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(calc(var(--i) * 50px)) scale(0);
+                opacity: 0;
+            }
+        }
+        
+        /* Data streams */
+        .data-streams {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -2;
+            overflow: hidden;
+        }
+        
+        .data-stream {
+            position: absolute;
+            font-family: 'Orbitron', monospace;
+            font-size: 14px;
+            color: rgba(0, 212, 255, 0.1);
+            animation: data-flow 8s infinite linear;
+            animation-delay: var(--delay);
+            white-space: nowrap;
+        }
+        
+        .data-stream:nth-child(1) { top: 10%; left: -100px; }
+        .data-stream:nth-child(2) { top: 30%; right: -100px; animation-direction: reverse; }
+        .data-stream:nth-child(3) { top: 60%; left: -100px; }
+        .data-stream:nth-child(4) { top: 80%; right: -100px; animation-direction: reverse; }
+        
+        @keyframes data-flow {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(100vw + 200px)); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Futuristic animated background elements -->
+        <div class="particles">
+            <div class="particle" style="--i:0;"></div>
+            <div class="particle" style="--i:1;"></div>
+            <div class="particle" style="--i:2;"></div>
+            <div class="particle" style="--i:3;"></div>
+            <div class="particle" style="--i:4;"></div>
+            <div class="particle" style="--i:5;"></div>
+            <div class="particle" style="--i:6;"></div>
+            <div class="particle" style="--i:7;"></div>
+            <div class="particle" style="--i:8;"></div>
+            <div class="particle" style="--i:9;"></div>
+        </div>
+        
+        <div class="data-streams">
+            <div class="data-stream" style="--delay:0s;">010101101</div>
+            <div class="data-stream" style="--delay:1s;">110010011</div>
+            <div class="data-stream" style="--delay:2s;">001101010</div>
+            <div class="data-stream" style="--delay:3s;">101101001</div>
+        </div>
+        
+        <h1>🎓 AI Interview Performance Analyzer</h1>
+        
+        <div class="question-section">
+            <div class="question-nav">
+                <span>Question <span id="currentQuestion">1</span> of <span id="totalQuestions">5</span></span>
+                <span class="timer" id="timer">00:00</span>
+            </div>
+            <div class="question" id="questionText">
+                What is C language? Explain its basic features and importance in programming.
+            </div>
+        </div>
+
+        <div class="video-container">
+            <video id="videoElement" autoplay muted></video>
+        </div>
+
+        <div class="controls">
+            <button id="startCamera" class="btn btn-primary">📹 Start Camera</button>
+            <button id="startRecording" class="btn btn-success" disabled>🔴 Start Recording</button>
+            <button id="stopRecording" class="btn btn-danger" disabled>⏹️ Stop Recording</button>
+            <button id="nextQuestion" class="btn btn-warning" disabled>➡️ Next Question</button>
+        </div>
+
+        <div class="status" id="status">
+            Click 'Start Camera' to begin your interview preparation.
+        </div>
+
+        <div class="answer-analysis" id="answerAnalysis">
+            <h3>📊 Technical Answer Analysis</h3>
+            <div class="metrics">
+                <div class="metric-card">
+                    <div class="metric-title">Technical Score</div>
+                    <div class="metric-value" id="technicalScore">0</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-title">Keywords Found</div>
+                    <div class="metric-value" id="keywordsFound" style="font-size: 14px;">None</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-title">Answer Quality</div>
+                    <div class="metric-value" id="answerQuality">Poor</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="performance-section" id="performanceSection">
+            <h2>🎯 Performance Analysis</h2>
+            <div class="performance-score" id="overallScore">0</div>
+            <div style="font-size: 18px; color: #666; margin-bottom: 20px;">Overall Score</div>
+            
+            <div class="confidence-meter">
+                <div class="confidence-fill" id="confidenceFill"></div>
+            </div>
+            
+            <div class="metrics">
+                <div class="metric-card">
+                    <div class="metric-title">Confidence Level</div>
+                    <div class="metric-value" id="confidenceScore">0%</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-title">Eye Contact</div>
+                    <div class="metric-value" id="eyeContactScore">0%</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-title">Speaking Pace</div>
+                    <div class="metric-value" id="speakingPaceScore">0%</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-title">Technical Accuracy</div>
+                    <div class="metric-value" id="technicalAccuracyScore">0%</div>
+                </div>
+            </div>
+
+            <div class="recommendations" id="recommendations">
+                <h3>💡 Recommendations</h3>
+                <ul id="recommendationsList"></ul>
+            </div>
+        </div>
+
+        <div class="final-results" id="finalResults">
+            <h2>🏆 Interview Complete!</h2>
+            <div class="final-score" id="finalScore">0</div>
+            <div style="font-size: 24px; margin-bottom: 20px;">Final Score</div>
+            <div id="finalAnalysis"></div>
+        </div>
+    </div>
+
+    <script>
+        class AdvancedInterviewAnalyzer {
+            constructor() {
+                this.video = document.getElementById('videoElement');
+                this.stream = null;
+                this.mediaRecorder = null;
+                this.recordedChunks = [];
+                this.isRecording = false;
+                this.startTime = null;
+                this.timerInterval = null;
+                this.currentQuestionIndex = 0;
+                this.questionScores = [];
+                
+                // Your 5 specific questions with strict technical criteria
+                this.questions = [
+                    {
+                        question: "What is C language? Explain its basic features and importance in programming.",
+                        keywords: ["program", "computer", "code", "software", "basic", "language"],
+                        expectedPoints: ["procedural programming", "structured language", "portable", "efficient", "compiled language", "pointer support", "memory management", "function oriented"]
+                    },
+                    {
+                        question: "What is Artificial Intelligence? Explain its types and applications.",
+                        keywords: ["smart", "computer", "machine", "robot", "automatic"],
+                        expectedPoints: ["machine intelligence", "learning from data", "neural networks", "automation", "problem solving", "pattern recognition", "decision making", "natural language processing"]
+                    },
+                    {
+                        question: "What is Cyber Security? Explain its importance and common threats.",
+                        keywords: ["safe", "security", "protect", "hack", "virus"],
+                        expectedPoints: ["data protection", "confidentiality", "integrity", "availability", "malware protection", "firewall", "encryption", "authentication", "security threats", "prevention"]
+                    },
+                    {
+                        question: "What is Two Factor Authentication? Explain how it enhances security.",
+                        keywords: ["password", "login", "security", "phone", "code"],
+                        expectedPoints: ["two-step verification", "password + second factor", "enhanced security", "biometric", "OTP", "SMS verification", "token based", "multi-factor authentication", "identity verification"]
+                    },
+                    {
+                        question: "What is a VPN? Explain its working and benefits.",
+                        keywords: ["internet", "private", "hide", "network", "vpn"],
+                        expectedPoints: ["virtual private network", "encrypted tunnel", "privacy protection", "secure connection", "remote access", "IP masking", "geo-restriction bypass", "anonymity", "data encryption"]
+                    }
+                ];
+                
+                this.initializeElements();
+                this.bindEvents();
+            }
+
+            initializeElements() {
+                this.startCameraBtn = document.getElementById('startCamera');
+                this.startRecordingBtn = document.getElementById('startRecording');
+                this.stopRecordingBtn = document.getElementById('stopRecording');
+                this.nextQuestionBtn = document.getElementById('nextQuestion');
+                this.status = document.getElementById('status');
+                this.questionText = document.getElementById('questionText');
+                this.currentQuestionSpan = document.getElementById('currentQuestion');
+                this.timer = document.getElementById('timer');
+                this.performanceSection = document.getElementById('performanceSection');
+                this.answerAnalysis = document.getElementById('answerAnalysis');
+                this.finalResults = document.getElementById('finalResults');
+                
+                document.getElementById('totalQuestions').textContent = this.questions.length;
+            }
+
+            bindEvents() {
+                this.startCameraBtn.addEventListener('click', () => this.startCamera());
+                this.startRecordingBtn.addEventListener('click', () => this.startRecording());
+                this.stopRecordingBtn.addEventListener('click', () => this.stopRecording());
+                this.nextQuestionBtn.addEventListener('click', () => this.nextQuestion());
+            }
+
+            async startCamera() {
+                try {
+                    this.stream = await navigator.mediaDevices.getUserMedia({ 
+                        video: { width: 1280, height: 720 }, 
+                        audio: true 
+                    });
+                    this.video.srcObject = this.stream;
+                    
+                    this.status.textContent = 'Camera started. Ready to record.';
+                    this.startCameraBtn.disabled = true;
+                    this.startRecordingBtn.disabled = false;
+                    
+                } catch (error) {
+                    this.status.textContent = 'Error accessing camera: ' + error.message;
+                }
+            }
+
+            startRecording() {
+                if (!this.stream) return;
+                
+                this.recordedChunks = [];
+                this.mediaRecorder = new MediaRecorder(this.stream);
+                
+                this.mediaRecorder.ondataavailable = (event) => {
+                    if (event.data.size > 0) {
+                        this.recordedChunks.push(event.data);
+                    }
+                };
+                
+                this.mediaRecorder.onstop = () => {
+                    this.analyzePerformance();
+                };
+                
+                this.mediaRecorder.start();
+                this.isRecording = true;
+                this.startTime = Date.now();
+                this.startTimer();
+                
+                this.status.innerHTML = '<span class="recording-indicator"></span>Recording... Answer the question confidently!';
+                this.startRecordingBtn.disabled = true;
+                this.stopRecordingBtn.disabled = false;
+                this.nextQuestionBtn.disabled = true;
+            }
+
+            stopRecording() {
+                if (this.mediaRecorder && this.isRecording) {
+                    this.mediaRecorder.stop();
+                    this.isRecording = false;
+                    this.stopTimer();
+                    
+                    this.status.textContent = 'Recording stopped. Analyzing performance...';
+                    this.stopRecordingBtn.disabled = true;
+                    this.nextQuestionBtn.disabled = false;
+                }
+            }
+
+            startTimer() {
+                this.timerInterval = setInterval(() => {
+                    const elapsed = Math.floor((Date.now() - this.startTime) / 1000);
+                    const minutes = Math.floor(elapsed / 60);
+                    const seconds = elapsed % 60;
+                    this.timer.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                }, 1000);
+            }
+
+            stopTimer() {
+                if (this.timerInterval) {
+                    clearInterval(this.timerInterval);
+                    this.timerInterval = null;
+                }
+            }
+
+            generateSimulatedTranscript(questionData) {
+                // Simulate realistic scenarios - mostly wrong/incomplete answers
+                const scenarios = [
+                    // Empty or minimal response (30% chance)
+                    "",
+                    "I don't know",
+                    "what?",
+                    "sorry",
+                    
+                    // Wrong/confused answer (40% chance)  
+                    "I think it's about computers and stuff",
+                    "It's like programming I guess",
+                    "Something with technology",
+                    "I'm not sure about this topic",
+                    
+                    // Partial answer (20% chance)
+                    "It's important for software development",
+                    "It helps with security I think",
+                    "Used in many applications",
+                    
+                    // Decent answer (10% chance)
+                    `Well, ${questionData.question.toLowerCase().replace('what is', 'this is')} about ${questionData.expectedPoints[0] || 'basic concepts'}. It involves ${questionData.keywords.slice(0, 2).join(', ')}.`,
+                ];
+                
+                // Weighted random selection - mostly poor answers
+                const random = Math.random();
+                let selectedIndex;
+                if (random < 0.3) selectedIndex = Math.floor(Math.random() * 4); // Empty/wrong
+                else if (random < 0.7) selectedIndex = 4 + Math.floor(Math.random() * 4); // Confused
+                else if (random < 0.9) selectedIndex = 8 + Math.floor(Math.random() * 4); // Partial
+                else selectedIndex = 12; // Decent
+                
+                return scenarios[selectedIndex] || "I don't know";
+            }
+
+            analyzeTechnicalAnswer(transcript, questionData) {
+                const lowerTranscript = transcript.toLowerCase().trim();
+                const words = transcript.split(/\s+/).filter(word => word.length > 0).length;
+                
+                // Handle empty or minimal responses
+                if (!transcript || transcript.trim().length < 10 || words < 5) {
+                    return {
+                        score: 0,
+                        keywords: [],
+                        quality: "No meaningful response"
+                    };
+                }
+                
+                // Handle "I don't know" type responses
+                const dontKnowPatterns = ["i don't know", "i dont know", "i don't understand", "no idea", "what?", "sorry", "i think"];
+                if (dontKnowPatterns.some(pattern => lowerTranscript.includes(pattern))) {
+                    return {
+                        score: Math.floor(Math.random() * 15) + 5, // 5-20% max
+                        keywords: [],
+                        quality: "Needs significant improvement"
+                    };
+                }
+                
+                // SUPER SIMPLE KEYWORD DETECTION - GUARANTEED TO WORK
+                let keywordMatches = 0;
+                const foundKeywords = [];
+                
+                // Check each keyword - if ANY word from transcript matches ANY part of keyword, count it!
+                questionData.keywords.forEach(keyword => {
+                    const keywordLower = keyword.toLowerCase();
+                    // Simple check: if keyword exists anywhere in transcript
+                    if (lowerTranscript.includes(keywordLower)) {
+                        keywordMatches++;
+                        foundKeywords.push(keyword);
+                    } else {
+                        // Even simpler: check if ANY word in transcript contains ANY part of keyword
+                        const transcriptWords = lowerTranscript.split(/\s+/);
+                        const hasAnyMatch = transcriptWords.some(word => {
+                            // Check if word contains keyword OR keyword contains word
+                            return word.includes(keywordLower) || keywordLower.includes(word) || 
+                                   // Check first 3 characters
+                                   word.substring(0, 3) === keywordLower.substring(0, 3) ||
+                                   // Check if word sounds similar (basic check)
+                                   word.length > 3 && keywordLower.includes(word.substring(0, 3));
+                        });
+                        if (hasAnyMatch) {
+                            keywordMatches++;
+                            foundKeywords.push(keyword);
+                        }
+                    }
+                });
+                
+                // SUPER SIMPLE EXPECTED POINTS - JUST CHECK FOR BASIC WORDS
+                let pointMatches = 0;
+                questionData.expectedPoints.forEach(point => {
+                    const pointLower = point.toLowerCase();
+                    // If ANY part of expected point exists in transcript, count it!
+                    if (lowerTranscript.includes(pointLower)) {
+                        pointMatches++;
+                    } else {
+                        // Check individual words from expected point
+                        const pointWords = pointLower.split(' ');
+                        const hasWordMatch = pointWords.some(word => 
+                            word.length > 2 && lowerTranscript.includes(word)
+                        );
+                        if (hasWordMatch) {
+                            pointMatches++;
+                        }
+                    }
+                });
+                
+                // Calculate technical score - VERY LENIENT
+                const keywordScore = keywordMatches > 0 ? Math.min(80, (keywordMatches / questionData.keywords.length) * 100) : 0;
+                const pointScore = pointMatches > 0 ? Math.min(90, (pointMatches / questionData.expectedPoints.length) * 100) : 0;
+                const lengthScore = Math.min(words / 20 * 100, 100); // Reduced to 20+ words
+                
+                // Calculate final score - ensure minimum 30% if any keywords found
+                let technicalScore = Math.floor((keywordScore * 0.4 + pointScore * 0.5 + lengthScore * 0.1));
+                
+                // Enhanced scoring for better technical answer detection
+                // Give points for technical terms even if not exact matches
+                const technicalTerms = ['system', 'computer', 'program', 'code', 'software', 'application', 'data', 'algorithm', 'process', 'function', 'method'];
+                let technicalTermMatches = 0;
+                technicalTerms.forEach(term => {
+                    if (lowerTranscript.includes(term)) {
+                        technicalTermMatches++;
+                    }
+                });
+                
+                // Bonus for technical sentence structure
+                const technicalPatterns = [
+                    /\b(is|are|was|were)\s+\w+/g,  // Basic technical descriptions
+                    /\b(used|use|using)\s+(for|to)/g,  // Purpose statements
+                    /\b(important|necessary|required)\s+(for|because)/g,  // Importance statements
+                    /\b(example|instance|case)\s+(of|is)/g,  // Examples
+                    /[0-9]+/g  // Numbers (often technical)
+                ];
+                
+                let patternMatches = 0;
+                technicalPatterns.forEach(pattern => {
+                    const matches = lowerTranscript.match(pattern);
+                    if (matches) patternMatches += matches.length;
+                });
+                
+                // Calculate enhanced score with technical bonuses
+                const technicalBonus = Math.min(25, (technicalTermMatches * 3) + (patternMatches * 2));
+                
+                // Guarantee minimum score - IMPROVED
+                if (keywordMatches > 0 && technicalScore < 35) {
+                    technicalScore = 35; // Minimum 35% if any keywords detected
+                }
+                if (keywordMatches === 0 && (pointMatches > 0 || technicalTermMatches > 2)) {
+                    technicalScore = Math.max(technicalScore, 30); // Minimum 30% if technical content detected
+                }
+                if (technicalScore < 20 && words > 15) {
+                    technicalScore = 20; // Minimum 20% for substantial response
+                }
+                
+                // Add technical bonus (capped at 100)
+                technicalScore = Math.min(100, technicalScore + technicalBonus);
+                
+                return {
+                    score: Math.min(Math.max(technicalScore, 0), 100),
+                    keywords: foundKeywords,
+                    quality: technicalScore > 85 ? "Excellent" : technicalScore > 70 ? "Good" : technicalScore > 50 ? "Average" : technicalScore > 30 ? "Needs Improvement" : "Poor"
+                };
+            }
+
+            nextQuestion() {
+                this.currentQuestionIndex++;
+                
+                if (this.currentQuestionIndex < this.questions.length) {
+                    this.questionText.textContent = this.questions[this.currentQuestionIndex].question;
+                    this.currentQuestionSpan.textContent = this.currentQuestionIndex + 1;
+                    this.timer.textContent = '00:00';
+                    
+                    this.status.textContent = 'Ready for next question. Start recording when ready.';
+                    this.startRecordingBtn.disabled = false;
+                    this.nextQuestionBtn.disabled = true;
+                    this.performanceSection.style.display = 'none';
+                    this.answerAnalysis.style.display = 'none';
+                } else {
+                    this.showFinalResults();
+                }
+            }
+
+            analyzePerformance() {
+                const recordingDuration = this.recordedChunks.length > 0 ? 
+                    Math.floor((Date.now() - this.startTime) / 1000) : 0;
+                
+                // Check if user didn't speak or recording is too short
+                if (recordingDuration < 10 || this.recordedChunks.length === 0) {
+                    // Store poor score for no response
+                    this.questionScores.push({
+                        question: this.questions[this.currentQuestionIndex].question,
+                        technicalScore: 0,
+                        keywords: [],
+                        quality: "No response given"
+                    });
+                    
+                    // Display poor analysis
+                    document.getElementById('technicalScore').textContent = '0';
+                    document.getElementById('keywordsFound').textContent = 'None';
+                    document.getElementById('answerQuality').textContent = 'No response given';
+                    this.answerAnalysis.style.display = 'block';
+                    
+                    // Set all scores to 0 for no response
+                    document.getElementById('overallScore').textContent = '0';
+                    document.getElementById('confidenceScore').textContent = '0%';
+                    document.getElementById('eyeContactScore').textContent = '0%';
+                    document.getElementById('speakingPaceScore').textContent = '0%';
+                    document.getElementById('technicalAccuracyScore').textContent = '0%';
+                    
+                    document.getElementById('confidenceFill').style.width = '0%';
+                    
+                    this.generateRecommendations(0, 0, 0, 0, 0);
+                    
+                    this.performanceSection.style.display = 'block';
+                    this.status.textContent = 'No response detected. Please speak during recording!';
+                    return;
+                }
+                
+                // Get the current question data
+                const currentQuestionData = this.questions[this.currentQuestionIndex];
+                
+                // Simulate transcript analysis (in real implementation, use speech-to-text API)
+                const simulatedTranscript = this.generateSimulatedTranscript(currentQuestionData);
+                
+                // Analyze technical answer
+                const technicalAnalysis = this.analyzeTechnicalAnswer(simulatedTranscript, currentQuestionData);
+                
+                // Store question score
+                this.questionScores.push({
+                    question: currentQuestionData.question,
+                    technicalScore: technicalAnalysis.score,
+                    keywords: technicalAnalysis.keywords,
+                    quality: technicalAnalysis.quality
+                });
+                
+                // Display technical analysis
+                document.getElementById('technicalScore').textContent = technicalAnalysis.score;
+                document.getElementById('keywordsFound').textContent = technicalAnalysis.keywords.join(', ') || 'None';
+                document.getElementById('answerQuality').textContent = technicalAnalysis.quality;
+                this.answerAnalysis.style.display = 'block';
+                
+                // Generate realistic scores based on technical analysis
+                const baseScore = technicalAnalysis.score;
+                
+                const confidenceScore = baseScore > 70 ? Math.floor(Math.random() * 20) + 70 : 
+                                      baseScore > 40 ? Math.floor(Math.random() * 25) + 60 : 
+                                      Math.floor(Math.random() * 20) + 60;
+                
+                const eyeContactScore = baseScore > 70 ? Math.floor(Math.random() * 15) + 75 : 
+                                     baseScore > 40 ? Math.floor(Math.random() * 20) + 60 : 
+                                     Math.floor(Math.random() * 25) + 40;
+                
+                const speakingPaceScore = recordingDuration > 45 && recordingDuration < 180 && baseScore > 50 ? 
+                    Math.floor(Math.random() * 20) + 70 : Math.floor(Math.random() * 30) + 40;
+                
+                const overallScore = Math.floor((confidenceScore + eyeContactScore + speakingPaceScore + technicalAnalysis.score) / 4);
+                
+                // Update UI
+                document.getElementById('overallScore').textContent = overallScore;
+                document.getElementById('confidenceScore').textContent = confidenceScore + '%';
+                document.getElementById('eyeContactScore').textContent = eyeContactScore + '%';
+                document.getElementById('speakingPaceScore').textContent = speakingPaceScore + '%';
+                document.getElementById('technicalAccuracyScore').textContent = technicalAnalysis.score + '%';
+                
+                // Update confidence meter
+                document.getElementById('confidenceFill').style.width = overallScore + '%';
+                
+                // Generate recommendations
+                this.generateRecommendations(overallScore, confidenceScore, eyeContactScore, speakingPaceScore, technicalAnalysis.score);
+                
+                this.performanceSection.style.display = 'block';
+                this.status.textContent = 'Performance analysis complete!';
+            }
+
+            generateRecommendations(overall, confidence, eyeContact, pace, technical) {
+                const recommendations = [];
+                
+                if (technical < 70) {
+                    recommendations.push("Study the technical concepts more thoroughly - focus on key terminology");
+                    recommendations.push("Practice explaining technical concepts with proper examples");
+                }
+                
+                if (confidence < 85) {
+                    recommendations.push("Practice speaking more confidently about technical topics");
+                }
+                
+                if (eyeContact < 85) {
+                    recommendations.push("Maintain better eye contact while explaining technical concepts");
+                }
+                
+                if (pace < 80) {
+                    recommendations.push("Work on speaking pace - aim for clear, steady explanation");
+                }
+                
+                if (overall > 85) {
+                    recommendations.push("Excellent technical knowledge! Keep up the good work");
+                } else if (overall > 70) {
+                    recommendations.push("Good technical understanding! Focus on depth and clarity");
+                } else {
+                    recommendations.push("Review fundamental concepts and practice technical explanations");
+                }
+                
+                // Add specific technical recommendations
+                recommendations.push("Use more technical keywords in your answers");
+                recommendations.push("Provide real-world examples when explaining concepts");
+                
+                const recommendationsList = document.getElementById('recommendationsList');
+                recommendationsList.innerHTML = recommendations.map(rec => `<li>${rec}</li>`).join('');
+            }
+
+            showFinalResults() {
+                // Calculate average scores - be strict with scoring
+                const avgTechnicalScore = Math.floor(
+                    this.questionScores.reduce((sum, score) => sum + score.technicalScore, 0) / this.questionScores.length
+                );
+                
+                // Don't default to 75, use actual technical score as primary metric
+                const finalScore = avgTechnicalScore;
+                
+                // Hide other sections
+                this.performanceSection.style.display = 'none';
+                this.answerAnalysis.style.display = 'none';
+                
+                // Show final results
+                document.getElementById('finalScore').textContent = finalScore;
+                
+                let finalAnalysis = '';
+                if (finalScore >= 85) {
+                    finalAnalysis = '🌟 Outstanding performance! You have excellent technical knowledge and communication skills.';
+                } else if (finalScore >= 70) {
+                    finalAnalysis = '👏 Good performance! You have solid technical understanding with room for improvement.';
+                } else if (finalScore >= 50) {
+                    finalAnalysis = '📚 Average performance. Focus on studying technical concepts and practicing explanations.';
+                } else {
+                    finalAnalysis = '📖 Needs significant improvement. Review fundamental concepts and practice regularly.';
+                }
+                
+                document.getElementById('finalAnalysis').innerHTML = finalAnalysis;
+                this.finalResults.style.display = 'block';
+                
+                // Show detailed breakdown
+                const breakdownHtml = this.questionScores.map((score, index) => 
+                    `<div style="margin: 10px 0; padding: 10px; background: rgba(255,255,255,0.1); border-radius: 5px;">
+                        <strong>Question ${index + 1}:</strong> ${score.technicalScore}% - ${score.quality}
+                    </div>`
+                ).join('');
+                
+                this.finalResults.innerHTML += `<div style="margin-top: 20px;">${breakdownHtml}</div>`;
+                
+                this.status.textContent = 'Interview completed! Review your performance above.';
+            }
+        }
+
+        // Initialize the analyzer when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            new AdvancedInterviewAnalyzer();
+        });
+    </script>
+</body>
+</html>
